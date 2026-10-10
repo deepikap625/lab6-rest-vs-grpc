@@ -1,16 +1,15 @@
 
-|  Method 	| Local  	| Same-Zone  	|  Different Region 	|
-|---	|---	|---	|---	|---	|
-|   REST add	|   	|   	|  	|
-|   gRPC add	|   	|   	|    	|
-|   REST rawimg	|   	|   	|   	|
-|   gRPC rawimg	|       |   	|   	|
-|   REST dotproduct	|   	|   	|  	|
-|   gRPC dotproduct	|   	|   	|    	|
-|   REST jsonimg	|   	|   	|   	|
-|   gRPC jsonimg	|       |   	|   	|
-|   PING        |       |      |       |
+| Method          | Local (ms/query) | Same-Zone (ms/query) | Different Region (ms/query) |
+|-----------------|-----------------:|---------------------:|----------------------------:|
+| REST add        | 2.254            | 3.231                | Pending                     |
+| gRPC add        | 0.349            | 1.059                | Pending                     |
+| REST rawimg     | 4.255            | 7.193                | 1385.351                    |
+| gRPC rawimg     | 3.254            | 9.545                | Pending                     |
+| REST dotproduct | 2.550            | 3.870                | Pending                     |
+| gRPC dotproduct | 0.429            | 1.246                | Pending                     |
+| REST jsonimg    | 29.737           | 30.971               | Pending                     |
+| gRPC jsonimg    | 10.684           | 14.359               | Pending                     |
+| PING            | Not measured     | 0.434                | Not measured                |
 
-You should measure the basic latency  using the `ping` command - this can be construed to be the latency without any RPC or python overhead.
-
-You should examine your results and provide a short paragraph with your observations of the performance difference between REST and gRPC. You should explicitly comment on the role that network latency plays -- it's useful to know that REST makes a new TCP connection for each query while gRPC makes a single TCP connection that is used for all the queries.
+These numbers are based on the results you previously recorded. The cross-region REST raw-image measurement is approximately 1,385.351 ms per operation. The other cross-region entries are still pending; we won't guess them.
+Important: The ping result of 0.434 ms is for the same-zone connection between your client and the US server.
