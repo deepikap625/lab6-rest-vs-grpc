@@ -5,6 +5,7 @@ import jsonpickle
 from PIL import Image
 import io
 import argparse
+import base64
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -50,13 +51,65 @@ def rawimage():
 
 
 @app.route('/api/dotproduct', methods=['POST'])
+@app.route('/api/dotproduct', methods=['POST'])
 def dotproduct():
-    pass
+    data = request.get_json()
+
+    a = data.get('a', [])
+    b = data.get('b', [])
+
+    if len(a) != len(b):
+        return Response(
+            response=jsonpickle.encode({'error': 'Vectors must have the same length'}),
+            status=400,
+            mimetype="application/json"
+        )
+
+    result = sum(x * y for x, y in zip(a, b))
+
+    return Response(
+        response=jsonpickle.encode({'dotproduct': result}),
+        status=200,
+        mimetype="application/json"
+    )
 
 
 @app.route('/api/jsonimage', methods=['POST'])
+@app.route('/api/jsonimage', methods=['POST'])
+@app.route('/api/jsonimage', methods=['POST'])
 def jsonimage():
-    pass
+    try:
+        data = request.get_json()
+
+        # Decode the Base64 image string from the JSON request
+        encoded_image = data['image']
+        image_bytes = base64.b64decode(encoded_image, validate=True)
+
+        # Open the decoded image and read its dimensions
+        img = Image.open(io.BytesIO(image_bytes))
+        img.verify()
+
+        # Reopen the image to retrieve its dimensions
+        img = Image.open(io.BytesIO(image_bytes))
+
+        response = {
+            'width': img.width,
+            'height': img.height
+        }
+
+        return Response(
+            response=jsonpickle.encode(response),
+            status=200,
+            mimetype="application/json"
+        )
+
+    except Exception as e:
+        app.logger.exception("Failed to process JSON image")
+        return Response(
+            response=jsonpickle.encode({'error': str(e)}),
+            status=400,
+            mimetype="application/json"
+        )
 
 
 if __name__ == '__main__':
