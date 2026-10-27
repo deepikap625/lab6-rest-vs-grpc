@@ -16,4 +16,15 @@ Important: The ping result of 0.434 ms is for the same-zone connection between y
 
 ## Performance Observations
 
-The local and same-zone measurements generally show that gRPC provides lower latency than REST, particularly for lightweight operations such as addition and dot product. This is because gRPC uses Protocol Buffers for compact binary serialization and communicates over HTTP/2, reducing serialization and communication overhead. For image processing, the JSON-image method takes longer than the raw-image method because Base64 encoding increases the payload size and requires additional encoding and decoding. Network latency also affects performance when the client and server are in different regions. In our measurements, the REST raw-image operation took approximately 1,385 ms per query across regions, illustrating the potential impact of network distance. However, the remaining cross-region measurements could not be completed because the Google Cloud billing account was closed. Overall, the available results suggest that gRPC is more efficient for these operations, although performance depends on payload size, network conditions, and implementation details.
+- **Small operations:** gRPC had lower latency than REST for addition and dot product in all three environments. Protocol Buffers and HTTP/2 can reduce serialization and communication overhead.
+
+- **Raw image transfer:** gRPC was faster locally (3.254 ms vs. 4.255 ms), while REST was faster in the same zone (7.193 ms vs. 9.545 ms). Across regions, gRPC was slightly faster (1304.031 ms vs. 1385.351 ms).
+
+- **JSON image transfer:** JSON serialization and Base64 encoding can increase payload size and processing overhead. Across regions, gRPC jsonimg was substantially faster than REST (216.353 ms vs. 1411.830 ms).
+
+- **Network distance:** PING latency increased from 0.056 ms locally to 0.454 ms in the same zone and 159.874 ms across regions.
+
+- **Connection handling:** A gRPC channel can reuse an underlying HTTP/2 connection. If the REST client opens a new TCP connection for each request, connection setup may add overhead.
+
+- **Overall:** gRPC performed better for most measured operations, but not every operation in every environment. Performance depends on payload format, serialization, connection behavior, and network conditions.
+
