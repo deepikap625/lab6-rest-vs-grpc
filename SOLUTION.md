@@ -1,14 +1,14 @@
 
 | Method          | Local (ms/query) | Same-Zone (ms/query) | Different Region (ms/query) |
 |-----------------|-----------------:|---------------------:|----------------------------:|
-| REST add        | 2.254            | 3.231                | Pending                     |
-| gRPC add        | 0.349            | 1.059                | Pending                     |
+| REST add        | 2.254            | 3.231                | 321.8400                     |
+| gRPC add        | 0.349            | 1.059                | 142.9032                     |
 | REST rawimg     | 4.255            | 7.193                | 1385.351                    |
-| gRPC rawimg     | 3.254            | 9.545                | Pending                     |
-| REST dotproduct | 2.550            | 3.870                | Pending                     |
-| gRPC dotproduct | 0.429            | 1.246                | Pending                     |
-| REST jsonimg    | 29.737           | 30.971               | Pending                     |
-| gRPC jsonimg    | 10.684           | 14.359               | Pending                     |
+| gRPC rawimg     | 3.254            | 9.545                | 1304.0305                     |
+| REST dotproduct | 2.550            | 3.870                | 321.5585                     |
+| gRPC dotproduct | 0.429            | 1.246                | 143.2090                     |
+| REST jsonimg    | 29.737           | 30.971               | 1411.8304                     |
+| gRPC jsonimg    | 10.684           | 14.359               | 216.3527                     |
 | PING            | Not measured     | 0.434                | Not measured                |
 
 These numbers are based on the results you previously recorded. The cross-region REST raw-image measurement is approximately 1,385.351 ms per operation. The other cross-region entries are still pending; we won't guess them.
