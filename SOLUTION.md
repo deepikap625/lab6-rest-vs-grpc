@@ -9,7 +9,7 @@
 | gRPC dotproduct | 0.429            | 1.246                | 143.2090                     |
 | REST jsonimg    | 29.737           | 30.971               | 1411.8304                     |
 | gRPC jsonimg    | 10.684           | 14.359               | 216.3527                     |
-| PING            | Not measured     | 0.434                | Not measured                |
+| PING            | 0.0560           | 0.4540               | 159.8740                    |
 
 These numbers are based on the results you previously recorded. The cross-region REST raw-image measurement is approximately 1,385.351 ms per operation. The other cross-region entries are still pending; we won't guess them.
 Important: The ping result of 0.434 ms is for the same-zone connection between your client and the US server.
